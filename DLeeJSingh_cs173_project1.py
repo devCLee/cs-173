@@ -29,8 +29,8 @@ def getParam():
     return p1_in, p1_out, p2_in, p2_out, t_hop
     
     
-def checkCaught(p1_in, p1_out, p2_in, p2_out, t_hop):
-    """Checks if Soprano the cat gets caught or not
+def printCaught(p1_in, p1_out, p2_in, p2_out, t_hop):
+    """Prints if Soprano the cat gets caught or not
 
     Parameters:
         p1_in: length of time (in minutes) person 1 stays in the kitchen
@@ -72,4 +72,4 @@ def checkCaught(p1_in, p1_out, p2_in, p2_out, t_hop):
         
 if __name__ == "__main__":
     p1_in, p1_out, p2_in, p2_out, t_hop = getParam()
-    checkCaught(p1_in, p1_out, p2_in, p2_out, t_hop)
+    printCaught(p1_in, p1_out, p2_in, p2_out, t_hop)

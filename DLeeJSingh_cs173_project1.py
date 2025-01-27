@@ -42,6 +42,8 @@ def checkCaught(p1_in, p1_out, p2_in, p2_out, t_hop):
     Return value:
         None
     """
+    HOUR_AS_MINUTES = 24*60
+    t_hop = t_hop % HOUR_AS_MINUTES
     
     p1_cycle = p1_in + p1_out
     p2_cycle = p2_in + p2_out

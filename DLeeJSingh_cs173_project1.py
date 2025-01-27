@@ -6,7 +6,7 @@ This program simulates a situation where there are two people, and each person e
 """
     
 def getParam():
-    """A function that receives five inputs to simulate the situation and returns five integers.
+    """Receives five inputs to simulate the situation and returns five integers.
     
     Parameters:
         None
@@ -30,7 +30,7 @@ def getParam():
     
     
 def checkCaught(p1_in, p1_out, p2_in, p2_out, t_hop):
-    """A function that checks if Soprano the cat gets caught or not
+    """Checks if Soprano the cat gets caught or not
 
     Parameters:
         p1_in: length of time (in minutes) person 1 stays in the kitchen

@@ -44,6 +44,9 @@ def checkCaught(p1_in, p1_out, p2_in, p2_out, t_hop):
     """
     HOUR_AS_MINUTES = 24*60
     t_hop = t_hop % HOUR_AS_MINUTES
+
+    if (p1_in == 0 and p1_out == 0) or (p2_in == 0 and p2_out == 0):
+        raise TypeError("in and out are both 0, what to do? Ask teacher")
     
     p1_cycle = p1_in + p1_out
     p2_cycle = p2_in + p2_out

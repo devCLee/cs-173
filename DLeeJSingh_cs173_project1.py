@@ -42,26 +42,23 @@ def checkCaught(p1_in, p1_out, p2_in, p2_out, t_hop):
     Return value:
         None
     """
-    HOUR_AS_MINUTES = 24*60
-    t_hop = t_hop % HOUR_AS_MINUTES
+    def isCaughtByPerson(p_in, p_out, t_hop):
+        HOUR_AS_MINUTES = 24*60
+        t_hop = t_hop % HOUR_AS_MINUTES
 
-    if (p1_in == 0 and p1_out == 0) or (p2_in == 0 and p2_out == 0):
-        raise TypeError("in and out are both 0, what to do? Ask teacher")
-    
-    p1_cycle = p1_in + p1_out
-    p2_cycle = p2_in + p2_out
-    
-    p1_modulo = t_hop % p1_cycle
-    p2_modulo = t_hop % p2_cycle
-    
-    caught_by_p1 = p1_modulo < p1_in
-    caught_by_p2 = p2_modulo < p2_in
-    
-    if caught_by_p1 or caught_by_p2:
+        if p_in == 0 and p_out == 0: 
+            raise TypeError("in and out are both 0, what to do? Ask teacher")
+
+        p_cycle = p_in + p_out
+
+        p_modulo = t_hop % p_cycle
+
+        return p_modulo < p_in
+
+    if isCaughtByPerson(p1_in, p1_out, t_hop) or isCaughtByPerson(p2_in, p2_out, t_hop):
         print("CAUGHT")
     else:
         print("SUCCESS")
-        
         
 if __name__ == "__main__":
     p1_in, p1_out, p2_in, p2_out, t_hop = getParam()

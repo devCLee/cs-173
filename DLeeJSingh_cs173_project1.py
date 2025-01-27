@@ -43,11 +43,11 @@ def checkCaught(p1_in, p1_out, p2_in, p2_out, t_hop):
         None
     """
     def isCaughtByPerson(p_in, p_out, t_hop):
-        HOUR_AS_MINUTES = 24*60
-        t_hop = t_hop % HOUR_AS_MINUTES
-
         if p_in == 0 and p_out == 0: 
             raise TypeError("in and out are both 0, what to do? Ask teacher")
+
+        HOUR_AS_MINUTES = 24*60
+        t_hop = t_hop % HOUR_AS_MINUTES
 
         p_cycle = p_in + p_out
 

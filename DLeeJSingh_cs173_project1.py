@@ -43,6 +43,16 @@ def checkCaught(p1_in, p1_out, p2_in, p2_out, t_hop):
         None
     """
     def isCaughtByPerson(p_in, p_out, t_hop):
+        """Determines if Soprano is caught by a person
+
+        Parameters:
+            p_in: length of time (in minutes) the person stays in the kitchen
+            p_out: length of time (in minutes) person stays out of the kitchen
+            t_hop: the time in minutes after midnight when Soprano attempts to hop
+            
+        Return value:
+            A bool, whether or not Soprano was caught
+        """
         if p_in == 0 and p_out == 0: 
             raise TypeError("in and out are both 0, what to do? Ask teacher")
 

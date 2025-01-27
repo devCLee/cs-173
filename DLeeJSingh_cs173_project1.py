@@ -49,10 +49,10 @@ def checkCaught(p1_in, p1_out, p2_in, p2_out, t_hop):
     p1_modulo = t_hop % p1_cycle
     p2_modulo = t_hop % p2_cycle
     
-    p1_result = p1_modulo < p1_in
-    p2_result = p2_modulo < p2_in
+    caught_by_p1 = p1_modulo < p1_in
+    caught_by_p2 = p2_modulo < p2_in
     
-    if p1_result or p2_result:
+    if caught_by_p1 or caught_by_p2:
         print("CAUGHT")
     else:
         print("SUCCESS")

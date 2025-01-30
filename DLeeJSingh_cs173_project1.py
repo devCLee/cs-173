@@ -53,12 +53,12 @@ def printCaught(p1_in, p1_out, p2_in, p2_out, t_hop):
         Return value:
             A bool, whether or not Soprano was caught
         """
-        HOUR_AS_MINUTES = 24*60
+        HOUR_AS_MINUTES = 24*60 # Accounting for the reset of midnight
         t_hop = t_hop % HOUR_AS_MINUTES
 
         p_cycle = p_in + p_out
 
-        p_modulo = t_hop % p_cycle
+        p_modulo = t_hop % p_cycle # Check where we are in the cycle
 
         return p_modulo < p_in
 

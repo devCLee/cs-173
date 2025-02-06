@@ -17,6 +17,10 @@
 // something other than an integer?
 //=========================================================
 
+//! 2^31 - 1
+//! Safe bound: ~ 2^30 = 2^10 * 2^10 * 2^10 = 1024^3
+//! Typically, integers are stored as 4 bytes (32 bits). This means that in almost all machines, the maximum integer value will be 2^(31) - 1 = +2147483647.
+
 #include <iostream> // preprocessor directives
 
 using namespace std; // lets us use identifiers defined in std

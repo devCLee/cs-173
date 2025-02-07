@@ -9,11 +9,12 @@
 //=========================================================
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 
-bool checkCaught(int, int, int);                   // function prototypes -- come before main()
-void determineHopSuccess(int, int, int, int, int); // function prototypes -- come before main()
+bool checkCaught(int, int, int);                     // function prototypes -- come before main()
+string determineHopSuccess(int, int, int, int, int); // function prototypes -- come before main()
 
 int MINUTES_IN_DAY = 24 * 60; // Accounting for the reset of midnight
 
@@ -33,7 +34,7 @@ int main()
 
     cin >> t_hop;
 
-    determineHopSuccess(p1_in, p1_out, p2_in, p2_out, t_hop);
+    cout << determineHopSuccess(p1_in, p1_out, p2_in, p2_out, t_hop) << endl;
 
     return 0;
 }
@@ -69,16 +70,16 @@ bool checkCaught(int p_in, int p_out, int t_hop)
 //      p2_out: an integer of length of time (in minutes) person 2 stays out of the kitchen. It is greater than or equal to 0.
 //      t_hop: an integer of the time in minutes after midnight when Soprano attempts to hop. It is greater than or equal to 0.
 // Return Value:
-//      None. This function just prints out either "CAUGHT" or "SUCCESS".
+//      A string of either "CAUGHT" or "SUCCESS".
 //=================================================
-void determineHopSuccess(int p1_in, int p1_out, int p2_in, int p2_out, int t_hop)
+string determineHopSuccess(int p1_in, int p1_out, int p2_in, int p2_out, int t_hop)
 {
     if (checkCaught(p1_in, p1_out, t_hop) || checkCaught(p2_in, p2_out, t_hop))
     {
-        cout << "CAUGHT";
+        return "CAUGHT";
     }
     else
     {
-        cout << "SUCCESS";
+        return "SUCCESS";
     }
 }

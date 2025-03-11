@@ -22,8 +22,8 @@ int main()
 
     while (repeat)
     {
-        cin >> num_a;
-        cin >> num_b;
+        cin >> num_a >> num_b;
+        // cin >> num_b;
 
         if (cin.fail()) // Check if cin is in the FAIL STATE
         {

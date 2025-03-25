@@ -14,20 +14,21 @@
 #include "Date.h"
 using namespace std;
 
-int main(){
+int main()
+{
     // test date functionality
 
     Date date1; // uses default constructor
-    cout << "Date 1: "; 
-    date1.printDate(); 
+    cout << "Date 1: ";
+    date1.printDate();
     cout << endl;
     Date date2(Date::MAR, 10, 2026); // uses standard constructor
-    cout << "Date 2: "; 
+    cout << "Date 2: ";
     date2.printDate();
     cout << endl;
     Date date3(date2); // uses custom constructor
     cout << "Date 3 (copy of Date 2): ";
-    date3.printDate(); 
+    date3.printDate();
     cout << endl;
 
     cout << "Date 3's year:" << date3.getYear() << endl;
@@ -46,16 +47,15 @@ int main(){
     date1.setDay(45);
     cout << date1.getDay() << endl;
 
-    cout << "Date 1: "; 
-    date1.printDate(); 
+    cout << "Date 1: ";
+    date1.printDate();
     cout << endl;
-    cout << "Date 2: "; 
-    date2.printDate(); 
+    cout << "Date 2: ";
+    date2.printDate();
     cout << endl;
-    cout << "Date 3: "; 
-    date3.printDate(); 
+    cout << "Date 3: ";
+    date3.printDate();
     cout << endl;
-
 
     return 0;
 }

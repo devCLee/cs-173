@@ -7,9 +7,10 @@
 //=====================================================
 
 #include <iostream>
+#include <ctime>
 using namespace std;
 
-int main ()
+int main()
 {
    // The random number generator creates a sequence of
    // random-looking integers.   The sequence is repeatable
@@ -33,9 +34,8 @@ int main ()
    // it is common to use the % operator to get a range
    // of random values.   Here we generate 10 random values
    // between 0 and 4 inclusive.
-   for ( int i = 0; i < 10; i++ )
-      cout << "value = " << rand() % 5 <<  endl;
+   for (int i = 0; i < 10; i++)
+      cout << "value = " << rand() % 5 << endl;
 
-   
    return 0;
 }

@@ -293,7 +293,7 @@ void Date::setDate(Month m, int d, int y)
 //====================================================================================
 bool Date::isLeapYear() const
 {
-    return false;
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
 
 //====================================================================================
@@ -304,7 +304,7 @@ bool Date::isLeapYear() const
 //====================================================================================
 bool Date::isValidYear() const
 {
-    return true;
+    return year >= 1 && year <= 9999;
 }
 
 //====================================================================================
@@ -315,7 +315,7 @@ bool Date::isValidYear() const
 //====================================================================================
 bool Date::isValidMonth() const
 {
-    return true;
+    return month >= JAN && month <= DEC;
 }
 
 //====================================================================================
@@ -326,5 +326,35 @@ bool Date::isValidMonth() const
 //====================================================================================
 bool Date::isValidDay() const
 {
-    return true;
+
+    if (day <= 0)
+        return false;
+
+    switch (month)
+    {
+
+    case JAN:
+    case MAR:
+    case MAY:
+    case JUL:
+    case AUG:
+    case OCT:
+    case DEC:
+        return day <= 31;
+
+    case APR:
+    case JUN:
+    case SEP:
+    case NOV:
+        return day <= 30;
+
+    case FEB:
+        if (isLeapYear())
+            return day <= 29;
+        else
+            return day <= 28;
+
+    default:
+        return false;
+    }
 }

@@ -154,46 +154,46 @@ int sumArray(const int a[], int n)
 // true if array is in sorted ascending order, false
 // if not
 //===============================================
-// template <typename S>
-// bool isSorted(const S a[], int n)
-//{
-//
-//	bool status = true;
-//
-//	for (int i = 0; i < n - 1; i++)
-//	{
-//		if (!(a[i] < a[i + 1]))
-//		{
-//
-//			status = false;
-//
-//			break;
-//		}
-//	}
-//
-//	return status;
-//}
-
-bool isSorted(int array[], int size)
+template <typename S>
+bool isSorted(const S a[], int n)
 {
-	// If there's only one element, it's automatically sorted
-	if (size == 1)
-	{
-		return true;
-	}
 
-	// Check each element against the next element
-	for (int i = 0; i < size - 1; i++)
+	bool status = true;
+
+	for (int i = 0; i < n - 1; i++)
 	{
-		// If we find any element greater than the next element,
-		// the array is not sorted in ascending order
-		if (array[i] > array[i + 1])
+		if (!(a[i] < a[i + 1]))
 		{
-			return false;
+
+			status = false;
+
+			break;
 		}
 	}
 
-	// If we've examined all pairs without finding any out of order,
-	// then the array is sorted
-	return true;
+	return status;
 }
+
+// bool isSorted(int array[], int size)
+//{
+//	// If there's only one element, it's automatically sorted
+//	if (size == 1)
+//	{
+//		return true;
+//	}
+//
+//	// Check each element against the next element
+//	for (int i = 0; i < size - 1; i++)
+//	{
+//		// If we find any element greater than the next element,
+//		// the array is not sorted in ascending order
+//		if (array[i] > array[i + 1])
+//		{
+//			return false;
+//		}
+//	}
+//
+//	// If we've examined all pairs without finding any out of order,
+//	// then the array is sorted
+//	return true;
+// }

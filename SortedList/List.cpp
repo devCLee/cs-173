@@ -1,6 +1,6 @@
 //==============================================================
 // Daniel Lee
-// April 16th
+// April 16, 2025
 // List.cpp
 // This file contains the class method definitions for
 // the List class.
@@ -20,27 +20,32 @@ using namespace std;
 template <typename T>
 List<T>::List()
 {
-    head = nullptr; //! Initializied List object must be empty
+    capacity = DEFAULT_ARRAY_SIZE;
+    size = 0;
+    arr = new T[capacity];
 }
+
 //==============================================================
 // copy constructor
 // Creates a new List object as a copy of another.
 // Parameters:
-//      const List<T>& mylist: the List object to copy
+//      const List<T> &l: the List object to copy
 // Return: None
 //==============================================================
 template <typename T>
-List<T>::List(const List<T> &mylist)
+List<T>::List(const List<T> &l)
 {
-    head = nullptr;
+    capacity = l.capacity;
+    size = l.size;
+    arr = new T[capacity];
 
-    Node *currentNode = mylist.head;
-    while (currentNode != nullptr)
+    //! Deep copy: array itself is a pointer!
+    for (int i = 0; i < size; i++)
     {
-        append(currentNode->item);
-        currentNode = currentNode->next;
+        arr[i] = l.arr[i];
     }
 }
+
 //==============================================================
 // destructor
 // Cleans up the memory of the list.
@@ -50,38 +55,43 @@ List<T>::List(const List<T> &mylist)
 template <typename T>
 List<T>::~List()
 {
-    clear();
+    delete[] arr;
 }
+
 //==============================================================
 // operator=
 // Assigns the value of another List object to the object that we are intending to assign to
 // Parameters:
-//        const List<T>& mylist: a List object
+//        const List<T> &l: a List object
 // Return Value:
 //        A reference to this List object
 //==============================================================
 template <typename T>
-List<T> List<T>::operator=(const List<T> &mylist)
+List<T> List<T>::operator=(const List<T> &l)
 {
 
     //! Checking for self-assigning scenario
-    if (this == &mylist)
-        return mylist;
-
-    clear();
-
-    //! Acts like a copy constructor
-    Node *currentNode = mylist.head;
-    while (currentNode != nullptr)
+    if (this == &l)
     {
-        append(currentNode->item);
-        currentNode = currentNode->next;
+        return l;
+    }
+
+    delete[] arr;
+
+    arr = new T[capacity];
+
+    capacity = l.capacity;
+    size = l.size;
+
+    for (int i = 0; i < size; i++)
+    {
+        arr[i] = l.arr[i];
     }
 
     return *this;
 }
 //==============================================================
-// append
+//! append
 // Appends a new item onto the back of the list.
 // Parameters:
 //        item: the item that should be appended onto the back of the list.
@@ -89,69 +99,45 @@ List<T> List<T>::operator=(const List<T> &mylist)
 //        None
 //==============================================================
 template <typename T>
-void List<T>::append(const T &item)
+void List<T>::append(T item)
 {
-    Node *appendedNode = new Node;
-    appendedNode->item = item;
-    appendedNode->next = nullptr;
-
-    //! Check whether it is empty list
-    if (head == nullptr)
+    if (size >= capacity)
     {
-        head = appendedNode;
+        reallocate();
     }
-    else
-    {
-        Node *currentNode = head;
-        while (currentNode->next != nullptr)
-        {
-            currentNode = currentNode->next;
-        }
 
-        currentNode->next = appendedNode;
-    }
+    arr[size] = item;
+    size++;
 }
 //==============================================================
-// insert  ( item, index )
+//! insert  ( item, position )
 // Inserts a new value at the specified position.
 // Parameters:
 //        item: the new value that should be inserted into the list.
-//        index: the index position that the item should be inserted into.
+//        position: the index position that the item should be inserted into.
 // Return Value:
 //        None
 //==============================================================
 template <typename T>
-void List<T>::insert(const T &item, int index)
+void List<T>::insert(T item, int position)
 {
-    int size = length();
-    if (index < 0 || index > size)
+    if (position < 0 || position > size)
     {
         throw runtime_error("Error occurred! Invalid index!\n");
     }
 
-    Node *insertedNode = new Node;
-    insertedNode->item = item;
+    if (size >= capacity)
+    {
+        reallocate();
+    }
 
-    if (index == 0)
+    for (int i = size; i > position; i--)
     {
-        insertedNode->next = head;
-        head = insertedNode;
+        arr[i] = arr[i - 1];
     }
-    else if (index == size)
-    {
-        append(item);
-    }
-    else
-    {
-        Node *currentNode = head;
-        for (int i = 0; i < index - 1; i++)
-        {
-            currentNode = currentNode->next;
-        }
 
-        insertedNode->next = currentNode->next;
-        currentNode->next = insertedNode;
-    }
+    arr[position] = item;
+    size++;
 }
 //==============================================================
 // length
@@ -163,87 +149,49 @@ void List<T>::insert(const T &item, int index)
 template <typename T>
 int List<T>::length() const
 {
-    int count = 0;
-    Node *currentNode = head;
-
-    while (currentNode != nullptr)
-    {
-        count += 1;
-        currentNode = currentNode->next;
-    }
-
-    return count;
+    return size;
 }
 //==============================================================
 // operator[]
-// Valid indices are 0 to size-1.   Invalid indices generate
-// a run-time error and end the program.
 // Accesses (by reference) the item at the specified index.
 // Parameters:
-//        index: the index position that the function is trying to access.
+//        position: the index position that the function is trying to access.
 // Return Value:
 //        the array element in the position index.
 //==============================================================
 template <typename T>
-T &List<T>::operator[](int index) const
+T &List<T>::operator[](int position) const
 {
-    int size = length();
-    if (index < 0 || index >= size)
+    if (position < 0 || position >= size)
     {
         throw runtime_error("Error occurred! Invalid index!\n");
     }
 
-    Node *currentNode = head;
-    for (int i = 0; i < index; i++)
-    {
-        currentNode = currentNode->next;
-    }
-
-    return currentNode->item;
+    return arr[position];
 }
 //==============================================================
 // remove
-// Valid indices are 0 to size-1.   Invalid indices generate
-// a run-time error and end the program.
 // Removes an item at the specified location. Valid indices are 0 to size-1.
 // Invalid indices generate a run-time error and end the program.
 // Parameters:
-//        index: the index position of the element that the function is trying to remove.
+//        position: the index position of the element that the function is trying to remove.
 // Return Value:
 //        None
 //==============================================================
 template <typename T>
-void List<T>::remove(int index)
+void List<T>::remove(int position)
 {
-    int size = length();
-    if (index < 0 || index >= size)
+    if (position < 0 || position >= size)
     {
         throw runtime_error("Error occurred! Invalid index!\n");
     }
 
-    Node *nodeToDelete = nullptr;
-
-    if (index == 0)
+    for (int i = position; i < size - 1; i++)
     {
-        nodeToDelete = head;
-        head = head->next;
-
-        delete nodeToDelete;
+        arr[i] = arr[i + 1];
     }
-    else
-    {
-        Node *currentNode = head;
 
-        for (int i = 0; i < index - 1; ++i)
-        {
-            currentNode = currentNode->next;
-        }
-
-        nodeToDelete = currentNode->next;
-        currentNode->next = nodeToDelete->next;
-
-        delete nodeToDelete;
-    }
+    size = size - 1;
 }
 //==============================================================
 // isEmpty
@@ -256,29 +204,32 @@ void List<T>::remove(int index)
 template <typename T>
 bool List<T>::isEmpty() const
 {
-    return head == nullptr;
+    return size == 0;
 }
 //==============================================================
-// operator+  (concatenate two lists)
+//! operator+  (concatenate two lists)
 // Concatenates two lists into a new list. Does not change either existing list.
 // Parameters:
-//        const List<T>& mylist: the List object
+//        const List<T> &l: the List object
 // Return Value:
 //        newList: the result of the concatenation of two lists.
 //==============================================================
 template <typename T>
-List<T> List<T>::operator+(const List<T> &mylist) const
+List<T> List<T>::operator+(const List<T> &l) const
 {
-    List<T> newConcatList(*this);
+    List<T> newList;
 
-    Node *current = mylist.head;
-    while (current != nullptr)
+    for (int i = 0; i < size; i++)
     {
-        newConcatList.append(current->item);
-        current = current->next;
+        newList.append(arr[i]);
     }
 
-    return newConcatList;
+    for (int i = 0; i < l.size; i++)
+    {
+        newList.append(l.arr[i]);
+    }
+
+    return newList;
 }
 //==============================================================
 // clear
@@ -291,16 +242,30 @@ List<T> List<T>::operator+(const List<T> &mylist) const
 template <typename T>
 void List<T>::clear()
 {
-    Node *currentNode = head;
+    size = 0;
+}
+//==============================================================
+// reallocate
+// double the size of the array holding the list
+// Parameters:
+//        None
+// Return Value:
+//        None
+//==============================================================
+template <typename T>
+void List<T>::reallocate()
+{
+    int updatedCapacity = capacity * 2;
+    T *newArr = new T[updatedCapacity];
 
-    while (currentNode != nullptr)
+    for (int i = 0; i < size; i++)
     {
-        Node *nextNode = currentNode->next;
-
-        delete currentNode;
-
-        currentNode = nextNode;
+        newArr[i] = arr[i];
     }
 
-    head = nullptr; //! Avoid dangling pointer
+    delete[] arr;
+
+    capacity = updatedCapacity;
+    arr = newArr;
 }
+//==============================================================

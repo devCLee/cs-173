@@ -73,15 +73,17 @@ List<T> List<T>::operator=(const List<T> &l)
     //! Checking for self-assigning scenario
     if (this == &l)
     {
-        return l;
+        return *this; // Return the current object, not l
     }
 
     delete[] arr;
 
-    arr = new T[capacity];
-
+    // Update capacity and size before allocating the new array
     capacity = l.capacity;
     size = l.size;
+
+    // Now allocate with the correct capacity
+    arr = new T[capacity];
 
     for (int i = 0; i < size; i++)
     {

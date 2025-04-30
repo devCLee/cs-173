@@ -131,6 +131,7 @@ void List<T>::insert(const T &item, int index)
 
     Node *insertedNode = new Node;
     insertedNode->item = item;
+    insertedNode->next = nullptr;
 
     if (index == 0)
     {
@@ -139,9 +140,24 @@ void List<T>::insert(const T &item, int index)
     }
     else if (index == size)
     {
-        append(item);
+        // append(item);
+
+        // Use the already allocated node instead of calling append()
+        if (head == nullptr)
+        {
+            head = insertedNode;
+        }
+        else
+        {
+            Node *currentNode = head;
+            while (currentNode->next != nullptr)
+            {
+                currentNode = currentNode->next;
+            }
+            currentNode->next = insertedNode;
+        }
     }
-    else
+    else // for middle insertion
     {
         Node *currentNode = head;
         for (int i = 0; i < index - 1; i++)

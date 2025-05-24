@@ -62,6 +62,6 @@ int main()
 
 	while (!stack3.empty())
 	{
-		int leftCount
+		int leftCount;
 	}
 }
